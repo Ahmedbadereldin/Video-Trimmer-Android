@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="color_gray_alpha">#65b7b7b7</color>
+    <color name="app_blue">#0e1f2f</color>
+    <color name="text_color">#000000</color>
+    <color name="seekbar_color">#3be3e3</color>
+    <color name="line_color">#FF15FF00</color>
+    <color name="shadow_color">#00000000</color>
+    <color name="white">#ffffff</color>
+
+</resources>

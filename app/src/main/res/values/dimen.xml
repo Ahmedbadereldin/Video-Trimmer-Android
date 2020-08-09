@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="round_corner_big">@dimen/_8sdp</dimen>
+    <dimen name="round_corner_thin">@dimen/_5sdp</dimen>
+    <dimen name="circle_corner">@dimen/_165sdp</dimen>
+    <dimen name="share_icon">@dimen/_28sdp</dimen>
+
+    <dimen name="bottom_nav_icon">@dimen/_19ssp</dimen>
+    <dimen name="bottom_nav_padding">@dimen/_12sdp</dimen>
+
+    <dimen name="frames_video_height">62dp</dimen>
+    <dimen name="video_view_height">150dp</dimen>
+</resources>
