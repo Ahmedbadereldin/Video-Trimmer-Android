@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,7 +26,8 @@
                 android:inputType="textMultiLine"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:textColor="@color/app_blue"/>
+                android:textColor="@color/app_blue"
+                android:visibility="invisible" />
 
             <FrameLayout
                 android:id="@+id/postImgLY"
@@ -66,7 +66,7 @@
                 <ImageView
                     android:id="@+id/videoBtn"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_24sdp"
+                    android:layout_height="@dimen/_49sdp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:src="@drawable/ic_baseline_videocam_24a" />
@@ -77,9 +77,6 @@
         </LinearLayout>
 
 
-
-
     </FrameLayout>
-
 
 </LinearLayout>

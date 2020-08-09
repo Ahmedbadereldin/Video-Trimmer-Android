@@ -22,13 +22,17 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.ahmedbadereldin.videotrimmerapplication.R;
 import com.bumptech.glide.Glide;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
+
 import java.io.File;
 import java.util.Objects;
+
 import iam.thevoid.mediapicker.rxmediapicker.Purpose;
 import iam.thevoid.mediapicker.rxmediapicker.RxMediaPicker;
 import rx.functions.Action1;
@@ -36,7 +40,6 @@ import rx.functions.Action1;
 
 public class NewPostActivity extends AppCompatActivity {
 
-    private EditText contentTxt;
     private ImageView videoBtn;
     private FrameLayout postImgLY;
     private ImageView postImg;
@@ -64,7 +67,6 @@ public class NewPostActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        contentTxt = findViewById(R.id.contentTxt);
         videoBtn = findViewById(R.id.videoBtn);
         postImgLY = findViewById(R.id.postImgLY);
         postImg = findViewById(R.id.postImg);
@@ -80,11 +82,8 @@ public class NewPostActivity extends AppCompatActivity {
         if (receivedAction != null && receivedAction.equals(Intent.ACTION_SEND)) {
             //content is being shared
 
-            if (receivedType.startsWith("text/")) {
-                //handle sent text
-                String receivedText = sharedInentData.getStringExtra(Intent.EXTRA_TEXT);
-                contentTxt.setText(receivedText);
-            } else if (receivedType.startsWith("image/")) {
+            assert receivedType != null;
+            if (receivedType.startsWith("image/")) {
                 //handle sent image
                 uriPostImg = sharedInentData.getParcelableExtra(Intent.EXTRA_STREAM);
                 if (uriPostImg != null) {
@@ -159,13 +158,10 @@ public class NewPostActivity extends AppCompatActivity {
     }
 
     private void loadIage(Uri filepath) {
-        Log.d("loadIage", "loadIage: " + filepath);
-
         // MEDIA GALLERY
         String path = getPath(filepath);
         Uri filea = Uri.fromFile(new File(path));
         String fileExt = MimeTypeMap.getFileExtensionFromUrl(filea.toString());
-        Log.d("onActivityResultaaa", "onActivityResult: " + fileExt);
 
         if (fileExt.equalsIgnoreCase("MP4")) {
             File file = new File(path);
