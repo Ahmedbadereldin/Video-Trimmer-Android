@@ -1,4 +1,4 @@
-package com.ahmedbadereldin.videotrimmer;
+package com.ahmedbadereldin.videotrimmerapplication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,18 +16,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.ahmedbadereldin.videotrimmer.Utility;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.BackgroundTask;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.BarThumb;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.CustomRangeSeekBar;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.OnRangeSeekBarChangeListener;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.OnVideoTrimListener;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.TileView;
-
 import java.io.File;
 import java.util.Date;
 import java.util.Locale;

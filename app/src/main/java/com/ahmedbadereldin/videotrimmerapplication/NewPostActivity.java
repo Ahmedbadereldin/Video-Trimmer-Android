@@ -21,20 +21,14 @@ import android.webkit.MimeTypeMap;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.ahmedbadereldin.videotrimmerapplication.javaCode.VideoTrimmerActivity;
 import com.bumptech.glide.Glide;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
-
 import java.io.File;
 import java.util.Objects;
-
 import iam.thevoid.mediapicker.rxmediapicker.Purpose;
 import iam.thevoid.mediapicker.rxmediapicker.RxMediaPicker;
-import rx.functions.Action1;
 
 
 public class NewPostActivity extends AppCompatActivity {
@@ -43,10 +37,11 @@ public class NewPostActivity extends AppCompatActivity {
     private FrameLayout postImgLY;
     private ImageView postImg;
     private ImageView cancelImgBtn;
-    Uri uriPostImg;
-    String pathPostImg;
+    private Uri uriPostImg;
+    private String pathPostImg;
     private static final int REQUEST_TAKE_GALLERY_VIDEO = 100;
     private static final int VIDEO_TRIM = 101;
+    private String TAG = NewPostActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -61,7 +56,6 @@ public class NewPostActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
         setSharedInentData(intent);
     }
 
@@ -133,12 +127,7 @@ public class NewPostActivity extends AppCompatActivity {
                                 .pick(Purpose.Pick.VIDEO)
                                 .take(Purpose.Take.VIDEO)
                                 .build()
-                                .subscribe(new Action1<Uri>() {
-                                    @Override
-                                    public void call(Uri uri) {
-                                        loadIage(uri);
-                                    }
-                                });
+                                .subscribe(uri -> loadImage(uri));
                     }
 
                     @Override
@@ -156,7 +145,7 @@ public class NewPostActivity extends AppCompatActivity {
         });
     }
 
-    private void loadIage(Uri filepath) {
+    private void loadImage(Uri filepath) {
         // MEDIA GALLERY
         String path = getPath(filepath);
         Uri filea = Uri.fromFile(new File(path));
@@ -184,14 +173,13 @@ public class NewPostActivity extends AppCompatActivity {
         if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
             if (resultCode == RESULT_OK) {
                 Uri selectedImageUri = data.getData();
-
                 // MEDIA GALLERY
                 String path = getPath(selectedImageUri);
-                Uri filea = Uri.fromFile(new File(path));
-                String fileExt = MimeTypeMap.getFileExtensionFromUrl(filea.toString());
-                Log.d("onActivityResultaaa", "onActivityResult: " + fileExt);
+                Uri uriFile = Uri.fromFile(new File(path));
+                String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uriFile.toString());
+                Log.d(TAG, "onActivityResult: " + fileExtension);
 
-                if (fileExt.equalsIgnoreCase("MP4")) {
+                if (fileExtension.equalsIgnoreCase("MP4")) {
                     File file = new File(path);
                     if (file.exists()) {
                         startActivityForResult(new Intent(NewPostActivity.this, VideoTrimmerActivity.class).putExtra("EXTRA_PATH", path), VIDEO_TRIM);
@@ -200,7 +188,7 @@ public class NewPostActivity extends AppCompatActivity {
                         Toast.makeText(NewPostActivity.this, "Please select proper video", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(this, getString(R.string.file_format) + " ," + fileExt, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.file_format) + " ," + fileExtension, Toast.LENGTH_SHORT).show();
                 }
             }
         } else if (requestCode == VIDEO_TRIM) {
@@ -208,7 +196,7 @@ public class NewPostActivity extends AppCompatActivity {
                 if (data != null) {
                     String videoPath = data.getExtras().getString("INTENT_VIDEO_FILE");
                     File file = new File(videoPath);
-                    Log.d("onActivityResultAA", "onActivityResult: " + file.length());
+                    Log.d(TAG, "onActivityResult: " + file.length());
 
                     pathPostImg = videoPath;
 

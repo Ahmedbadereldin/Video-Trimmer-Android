@@ -11,7 +11,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.ahmedbadereldin.videotrimmerapplication.R;
+
+import com.ahmedbadereldin.videotrimmer.R;
 
 import java.util.ArrayList;
 import java.util.List;

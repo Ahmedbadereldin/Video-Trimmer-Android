@@ -43,7 +43,15 @@
         </activity>
 
         <activity
-            android:name=".javaCode.VideoTrimmerActivity"
+            android:name=".VideoTrimmerActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SlidrActivityTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".kotlinCode.VideoTrimmerKotlinActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
