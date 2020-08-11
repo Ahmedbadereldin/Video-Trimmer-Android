@@ -27,6 +27,67 @@ Trim the video by adjusting starting point and ending point in Android.
  - Whenever it is required to crop thr video, this code can help you
  - Whenever you are having a limiation of video recording such as allow users to record video for 1 min, this code can help you
 
+## Gradle ##
+```
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+```
+dependencies {
+    ...
+	implementation 'com.github.Ahmedbadereldin:Video-Trimmer-Android:1.0.0'
+}
+```
+
+## Setup your code ##
+
+ - In order to use the library without problems, add these codes.
+   
+ * AndroidManifest.xml 
+ ```
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.CAMERA" />
+ 
+     <application
+        ...
+         android:requestLegacyExternalStorage="true"
+        ...
+     >
+
+    ...
+
+    <activity
+            android:name=".YourActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- <data android:mimeType="*/*" /> -->
+                <data android:mimeType="video/*" />
+                <data android:mimeType="image/*" />
+                <data android:mimeType="text/*" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".VideoTrimmerActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SlidrActivityTheme"
+            android:windowSoftInputMode="adjustPan" />
+    ...
+
+ ```
 
 ## Requirements ##
 
