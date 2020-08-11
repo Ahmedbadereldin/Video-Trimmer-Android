@@ -1,2 +1,3 @@
+include ':videotrimmer'
 include ':app'
 rootProject.name = "VideoTrimmerApplication"

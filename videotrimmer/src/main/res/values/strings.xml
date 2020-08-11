@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">VideoTrimmerApplication</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="select_video_text">Select 1 min video</string>
+    <string name="video_length_validation">Video should be of minimum 3 seconds</string>
+    <string name="should_allow_permission">Should allow permission to work app correct</string>
+    <string name="some_permission_denied">Some Permissions were Denied</string>
+    <string name="file_format">File format is not supported</string>
+    <string name="app_provider">com.demo.videotrimmer.provider</string>
+</resources>
