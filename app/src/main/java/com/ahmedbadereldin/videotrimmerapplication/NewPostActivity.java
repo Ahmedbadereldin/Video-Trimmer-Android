@@ -1,4 +1,4 @@
-package com.ahmedbadereldin.videotrimmerapplication.javaCode;
+package com.ahmedbadereldin.videotrimmerapplication;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -18,14 +18,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.ahmedbadereldin.videotrimmerapplication.R;
+import com.ahmedbadereldin.videotrimmerapplication.javaCode.VideoTrimmerActivity;
 import com.bumptech.glide.Glide;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;

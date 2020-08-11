@@ -3,8 +3,6 @@ package com.ahmedbadereldin.videotrimmerapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import com.ahmedbadereldin.videotrimmerapplication.javaCode.NewPostActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

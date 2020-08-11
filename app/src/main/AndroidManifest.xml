@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-            android:name=".javaCode.NewPostActivity"
+            android:name=".NewPostActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
