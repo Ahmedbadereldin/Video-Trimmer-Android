@@ -4,6 +4,7 @@ Trim the video by adjusting starting point and ending point in Android.
 
 <a target="_blank" href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg" alt="license : MIT"></a>
 <a target="_blank" href="https://www.cmarix.com/android-application-development-services.html"><img src="https://img.shields.io/badge/platform-android-blue.svg" alt="license : MIT"></a>
+[![](https://jitpack.io/v/Ahmedbadereldin/Video-Trimmer-Android.svg)](https://jitpack.io/#Ahmedbadereldin/Video-Trimmer-Android)
 
 ## Core Features ##
 
