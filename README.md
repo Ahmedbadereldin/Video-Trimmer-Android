@@ -89,6 +89,57 @@ dependencies {
 
  ```
 
+ * In YourActivity
+  ```
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //  Open VideoTrimmerActivity
+        if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) { //recive 
+            if (resultCode == RESULT_OK) {
+                Uri selectedImageUri = data.getData();
+                // MEDIA GALLERY
+                String path = getPath(selectedImageUri);
+                Uri uriFile = Uri.fromFile(new File(path));
+                String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uriFile.toString());
+                Log.d(TAG, "onActivityResult: " + fileExtension);
+
+                if (fileExtension.equalsIgnoreCase("MP4")) {
+                    File file = new File(path);
+                    if (file.exists()) {
+                        startActivityForResult(new Intent(YourActivity.this, VideoTrimmerActivity.class).putExtra("EXTRA_PATH", path), VIDEO_TRIM);
+                        overridePendingTransition(0, 0);
+                    } else {
+                        Toast.makeText(NewPostActivity.this, "Please select proper video", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(this, getString(R.string.file_format) + " ," + fileExtension, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+        //  ForResult from VideoTrimmerActivity
+        if (requestCode == VIDEO_TRIM) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    String videoPath = data.getExtras().getString("INTENT_VIDEO_FILE");
+                    File file = new File(videoPath);
+                    Log.d(TAG, "onActivityResult: " + file.length());
+
+                    pathPostImg = videoPath;
+
+                    Glide.with(this)
+                            .load(pathPostImg)
+                            .into(postImg);
+                    postImgLY.setVisibility(View.VISIBLE);
+
+                }
+            }
+        }
+
+    }
+  ```
+   
 ## Requirements ##
 
  - Android 4.1+

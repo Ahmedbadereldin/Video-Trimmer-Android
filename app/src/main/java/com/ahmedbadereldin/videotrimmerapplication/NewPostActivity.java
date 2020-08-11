@@ -66,7 +66,6 @@ public class NewPostActivity extends AppCompatActivity {
         cancelImgBtn = findViewById(R.id.cancelImgBtn);
     }
 
-
     private void setSharedInentData(Intent sharedInentData) {
 
         String receivedAction = sharedInentData.getAction();
@@ -169,7 +168,6 @@ public class NewPostActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
             if (resultCode == RESULT_OK) {
                 Uri selectedImageUri = data.getData();
