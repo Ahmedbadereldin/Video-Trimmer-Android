@@ -6,6 +6,12 @@ Trim the video by adjusting starting point and ending point in Android.
 <a target="_blank" href="https://www.cmarix.com/android-application-development-services.html"><img src="https://img.shields.io/badge/platform-android-blue.svg" alt="license : MIT"></a>
 [![](https://jitpack.io/v/Ahmedbadereldin/Video-Trimmer-Android.svg)](https://jitpack.io/#Ahmedbadereldin/Video-Trimmer-Android)
 
+## Screen Shots ##
+
+<p align="center">
+<img src="screenshots/sample.gif" width="270" height="500" /> &nbsp;&nbsp;
+</p>
+
 ## Core Features ##
 
  - Video can be trimmed/shortened and played on the same screen
