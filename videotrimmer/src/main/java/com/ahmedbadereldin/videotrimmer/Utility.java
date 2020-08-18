@@ -32,15 +32,18 @@ public class Utility {
     public static void startTrim(@NonNull File src, @NonNull String dst, long startMs, long endMs,
                                  @NonNull OnVideoTrimListener callback) throws IOException {
         final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-
         File file = new File(dst);
         file.getParentFile().mkdirs();
         Log.d(TAG, "Generated file path " + dst);
         generateVideo(src, file, startMs, endMs, callback);
+
+
     }
 
     private static void generateVideo(@NonNull File src, @NonNull File dst, long startMs,
                                       long endMs, @NonNull OnVideoTrimListener callback) throws IOException {
+
+
         // NOTE: Switched to using FileDataSourceViaHeapImpl since it does not use memory mapping (VM).
         // Otherwise we get OOM with large movie files.
         Movie movie = MovieCreator.build(new FileDataSourceViaHeapImpl(src.getAbsolutePath()));
@@ -108,6 +111,7 @@ public class Utility {
         fos.close();
         if (callback != null)
             callback.getResult(Uri.parse(dst.toString()));
+
     }
 
 

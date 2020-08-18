@@ -16,9 +16,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.ahmedbadereldin.videotrimmer.Utility;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.BackgroundTask;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.BarThumb;
@@ -26,9 +28,11 @@ import com.ahmedbadereldin.videotrimmer.customVideoViews.CustomRangeSeekBar;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.OnRangeSeekBarChangeListener;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.OnVideoTrimListener;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.TileView;
+
 import java.io.File;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 
 public class VideoTrimmerActivity extends AppCompatActivity implements View.OnClickListener {
@@ -61,12 +65,14 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
         @Override
         public void onTrimStarted() {
             // Create an indeterminate progress dialog
+
             mProgressDialog = new ProgressDialog(VideoTrimmerActivity.this);
             mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             mProgressDialog.setTitle(getString(R.string.save));
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setCancelable(false);
             mProgressDialog.show();
+
         }
 
         @Override
@@ -199,7 +205,7 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
                         mediaMetadataRetriever = new MediaMetadataRetriever();
                 mediaMetadataRetriever.setDataSource(VideoTrimmerActivity.this, Uri.parse(srcFile));
                 final File file = new File(srcFile);
-                Log.d("fileLength", "onClick: " + file.length() + " " + file.canExecute());
+
                 //notify that video trimming started
                 if (mOnVideoTrimListener != null)
                     mOnVideoTrimListener.onTrimStarted();
@@ -208,11 +214,9 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
                                            @Override
                                            public void execute() {
                                                try {
-                                                   Log.d("executeAAAA", "execute: " + "Aaaa" + file.length() + " " + dstFile + " " + mStartPosition + " " + mEndPosition + " " + mOnVideoTrimListener);
-
                                                    Utility.startTrim(file, dstFile, mStartPosition * 1000, mEndPosition * 1000, mOnVideoTrimListener);
                                                } catch (final Throwable e) {
-                                                   Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                                                   Objects.requireNonNull(Thread.getDefaultUncaughtExceptionHandler()).uncaughtException(Thread.currentThread(), e);
                                                }
                                            }
                                        }

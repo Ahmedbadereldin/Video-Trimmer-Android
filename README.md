@@ -146,6 +146,22 @@ dependencies {
     }
   ```
    
+## Proguard ##
+ 
+  ```
+    ### RxJava, RxAndroid for media-picker-android library
+    -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+        long producerIndex;
+        long consumerIndex;
+    }
+    
+    ### mp4parser 
+    -keep class * implements com.coremedia.iso.boxes.Box {* ; }
+    -dontwarn com.coremedia.iso.boxes.*
+    -dontwarn com.googlecode.mp4parser.authoring.tracks.mjpeg.**
+    -dontwarn com.googlecode.mp4parser.authoring.tracks.ttml.**
+  ```
+
 ## Requirements ##
 
  - Android 4.1+

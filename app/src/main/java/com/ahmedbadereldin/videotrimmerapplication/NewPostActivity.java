@@ -49,14 +49,14 @@ public class NewPostActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_new_post);
         initViews();
-        setSharedInentData(getIntent());
+        setSharedIntentData(getIntent());
         initClicks();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        setSharedInentData(intent);
+        setSharedIntentData(intent);
     }
 
     private void initViews() {
@@ -66,20 +66,18 @@ public class NewPostActivity extends AppCompatActivity {
         cancelImgBtn = findViewById(R.id.cancelImgBtn);
     }
 
-    private void setSharedInentData(Intent sharedInentData) {
+    private void setSharedIntentData(Intent sharedIntentData) {
 
-        String receivedAction = sharedInentData.getAction();
-        String receivedType = sharedInentData.getType();
+        String receivedAction = sharedIntentData.getAction();
+        String receivedType = sharedIntentData.getType();
 
         if (receivedAction != null && receivedAction.equals(Intent.ACTION_SEND)) {
-            //content is being shared
-
             assert receivedType != null;
             if (receivedType.startsWith("image/")) {
                 //handle sent image
-                uriPostImg = sharedInentData.getParcelableExtra(Intent.EXTRA_STREAM);
+                uriPostImg = sharedIntentData.getParcelableExtra(Intent.EXTRA_STREAM);
                 if (uriPostImg != null) {
-                    hideSoftKeyboard(this, 0);
+                    hideSoftKeyboard(this);
 
                     pathPostImg = null;
                     Glide.with(this)
@@ -89,9 +87,8 @@ public class NewPostActivity extends AppCompatActivity {
 
                 }
             } else if (receivedType.startsWith("video/")) {
-//                GlobalData.Toast("video");
                 //handle sent video
-                uriPostImg = sharedInentData.getParcelableExtra(Intent.EXTRA_STREAM);
+                uriPostImg = sharedIntentData.getParcelableExtra(Intent.EXTRA_STREAM);
                 if (uriPostImg != null) {
                     //set the video
                     //RESAMPLE YOUR IMAGE DATA BEFORE DISPLAYING
@@ -106,7 +103,6 @@ public class NewPostActivity extends AppCompatActivity {
     }
 
     private void initClicks() {
-
         cancelImgBtn.setOnClickListener(view -> {
             uriPostImg = null;
             pathPostImg = null;
@@ -115,7 +111,6 @@ public class NewPostActivity extends AppCompatActivity {
 
         videoBtn.setOnClickListener(view -> {
             try {
-
                 PermissionCompat.Builder builder = new PermissionCompat.Builder(this);
                 builder.addPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
                 builder.addPermissionRationale(getString(R.string.should_allow_permission));
@@ -147,8 +142,8 @@ public class NewPostActivity extends AppCompatActivity {
     private void loadImage(Uri filepath) {
         // MEDIA GALLERY
         String path = getPath(filepath);
-        Uri filea = Uri.fromFile(new File(path));
-        String fileExt = MimeTypeMap.getFileExtensionFromUrl(filea.toString());
+        Uri uriFile = Uri.fromFile(new File(path));
+        String fileExt = MimeTypeMap.getFileExtensionFromUrl(uriFile.toString());
 
         if (fileExt.equalsIgnoreCase("MP4")) {
             File file = new File(path);
@@ -175,7 +170,6 @@ public class NewPostActivity extends AppCompatActivity {
                 String path = getPath(selectedImageUri);
                 Uri uriFile = Uri.fromFile(new File(path));
                 String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uriFile.toString());
-                Log.d(TAG, "onActivityResult: " + fileExtension);
 
                 if (fileExtension.equalsIgnoreCase("MP4")) {
                     File file = new File(path);
@@ -324,17 +318,12 @@ public class NewPostActivity extends AppCompatActivity {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
-    public static void hideSoftKeyboard(Activity activity, int show) {
-        try {
-            InputMethodManager inputMethodManager =
-                    (InputMethodManager) activity.getSystemService(
-                            Activity.INPUT_METHOD_SERVICE);
-            assert inputMethodManager != null;
-            inputMethodManager.hideSoftInputFromWindow(
-                    Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
-        } catch (Exception e) {
-//            e.printStackTrace();
-        }
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
+        inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
     }
 
 }
