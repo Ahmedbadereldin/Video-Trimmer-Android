@@ -46,7 +46,7 @@ allprojects {
 ```
 dependencies {
     ...
-	implementation 'com.github.Ahmedbadereldin:Video-Trimmer-Android:1.0.1'
+	implementation 'com.github.Ahmedbadereldin:Video-Trimmer-Android:1.0.2'
 }
 ```
 
