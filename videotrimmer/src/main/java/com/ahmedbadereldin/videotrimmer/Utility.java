@@ -1,9 +1,13 @@
 package com.ahmedbadereldin.videotrimmer;
 
+import android.app.Activity;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.ahmedbadereldin.videotrimmer.customVideoViews.OnVideoTrimListener;
 import com.coremedia.iso.boxes.Container;
@@ -29,15 +33,11 @@ public class Utility {
     public static final String VIDEO_FORMAT = ".mp4";
     private static final String TAG = Utility.class.getSimpleName();
 
-    public static void startTrim(@NonNull File src, @NonNull String dst, long startMs, long endMs,
+    public static void startTrim(Activity activity, @NonNull File src, @NonNull String dst, long startMs, long endMs,
                                  @NonNull OnVideoTrimListener callback) throws IOException {
-        final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-        File file = new File(dst);
-        file.getParentFile().mkdirs();
-        Log.d(TAG, "Generated file path " + dst);
-        generateVideo(src, file, startMs, endMs, callback);
-
-
+        File file1 = create(activity, dst);
+        if (file1 != null)
+            generateVideo(src, file1, startMs, endMs, callback);
     }
 
     private static void generateVideo(@NonNull File src, @NonNull File dst, long startMs,
@@ -103,16 +103,39 @@ public class Utility {
 
         Container out = new DefaultMp4Builder().build(movie);
 
-        FileOutputStream fos = new FileOutputStream(dst);
-        FileChannel fc = fos.getChannel();
-        out.writeContainer(fc);
-
-        fc.close();
-        fos.close();
-        if (callback != null)
-            callback.getResult(Uri.parse(dst.toString()));
+        try {
+            FileOutputStream fos = new FileOutputStream(dst);
+            FileChannel fc = fos.getChannel();
+            out.writeContainer(fc);
+            fc.close();
+            fos.close();
+            if (callback != null)
+                callback.getResult(Uri.parse(dst.toString()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
+    private static File create(Activity activity, String dst) {
+        File file = new File(dst);
+        file.getParentFile().mkdirs();
 
+//        File storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = activity.getExternalFilesDir(file.getParentFile().getAbsolutePath());
+        Log.d(TAG, "Generated file path " + file.getParentFile().getAbsolutePath() + " ----< 123123  file1 " + storageDir.exists());
+        Log.d(TAG, "Generated file path " + Environment.DIRECTORY_PICTURES + " ----< 123123  file1 " + storageDir.exists());
+
+        try {
+            return File.createTempFile(
+                    activity.getResources().getString(R.string.app_name) + new Date().getTime(), /* prefix */
+                    ".mp4", /* suffix */
+                    storageDir /* directory */
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

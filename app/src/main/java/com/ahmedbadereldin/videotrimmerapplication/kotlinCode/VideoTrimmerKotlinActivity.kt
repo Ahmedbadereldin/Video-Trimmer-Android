@@ -187,7 +187,7 @@ class VideoTrimmerKotlinActivity : AppCompatActivity(),
                                 "executeAAAA",
                                 "execute: " + "Aaaa" + file.length() + " " + dstFile + " " + mStartPosition + " " + mEndPosition + " " + mOnVideoTrimListener
                             )
-                            Utility.startTrim(
+                            Utility.startTrim(this@VideoTrimmerKotlinActivity,
                                 file,
                                 dstFile!!,
                                 mStartPosition * 1000.toLong(),

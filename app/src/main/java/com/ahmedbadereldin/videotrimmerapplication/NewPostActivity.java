@@ -147,6 +147,8 @@ public class NewPostActivity extends AppCompatActivity {
 
         if (fileExt.equalsIgnoreCase("MP4")) {
             File file = new File(path);
+            Log.d(TAG, "loadImageloadImageloadImageloadImage: " + path);
+            Log.d(TAG, "loadImageloadImageloadImageloadImage: " + file.length());
             if (file.exists()) {
                 startActivityForResult(new Intent(NewPostActivity.this, VideoTrimmerActivity.class).putExtra("EXTRA_PATH", path), VIDEO_TRIM);
                 overridePendingTransition(0, 0);

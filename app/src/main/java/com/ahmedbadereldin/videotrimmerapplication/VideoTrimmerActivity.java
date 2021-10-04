@@ -1,13 +1,17 @@
 package com.ahmedbadereldin.videotrimmerapplication;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +24,7 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.ahmedbadereldin.videotrimmer.Utility;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.BackgroundTask;
@@ -28,8 +33,12 @@ import com.ahmedbadereldin.videotrimmer.customVideoViews.CustomRangeSeekBar;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.OnRangeSeekBarChangeListener;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.OnVideoTrimListener;
 import com.ahmedbadereldin.videotrimmer.customVideoViews.TileView;
+import com.sangcomz.fishbun.FishBun;
+import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -117,9 +126,14 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
 
         if (getIntent().getExtras() != null) {
             srcFile = getIntent().getExtras().getString("EXTRA_PATH");
+
         }
         dstFile = Environment.getExternalStorageDirectory() + "/" + getString(R.string.app_name) + new Date().getTime()
                 + Utility.VIDEO_FORMAT;
+//        dstFile = Environment.getExternalStorageDirectory() + "/" + getString(R.string.app_name) + new Date().getTime()
+//                + Utility.VIDEO_FORMAT;
+
+        Log.d("srcFile", "loadImageloadImageloadImageloadImage: " + dstFile);
 
         tileView.post(() -> {
             setBitmap(Uri.parse(srcFile));
@@ -205,7 +219,10 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
                         mediaMetadataRetriever = new MediaMetadataRetriever();
                 mediaMetadataRetriever.setDataSource(VideoTrimmerActivity.this, Uri.parse(srcFile));
                 final File file = new File(srcFile);
-
+                Log.d(
+                        "executeAAAA",
+                        "execute: " + "Aaaa" + file.length() + " " + dstFile + " " + mStartPosition + " " + mEndPosition + " " + mOnVideoTrimListener
+                );
                 //notify that video trimming started
                 if (mOnVideoTrimListener != null)
                     mOnVideoTrimListener.onTrimStarted();
@@ -214,7 +231,11 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
                                            @Override
                                            public void execute() {
                                                try {
-                                                   Utility.startTrim(file, dstFile, mStartPosition * 1000, mEndPosition * 1000, mOnVideoTrimListener);
+                                                   Log.d(
+                                                           "executeAAAA",
+                                                           "execute: " + "Aaaa" + file.length() + " " + dstFile + " " + mStartPosition + " " + mEndPosition + " " + mOnVideoTrimListener
+                                                   );
+                                                   Utility.startTrim(VideoTrimmerActivity.this,file, dstFile, mStartPosition * 1000, mEndPosition * 1000, mOnVideoTrimListener);
                                                } catch (final Throwable e) {
                                                    Objects.requireNonNull(Thread.getDefaultUncaughtExceptionHandler()).uncaughtException(Thread.currentThread(), e);
                                                }
@@ -421,4 +442,6 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
         // return timer string
         return finalTimerString;
     }
+
+
 }
