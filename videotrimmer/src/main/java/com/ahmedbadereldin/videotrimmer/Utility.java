@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 import com.ahmedbadereldin.videotrimmer.customVideoViews.OnVideoTrimListener;
 import com.coremedia.iso.boxes.Container;
@@ -23,11 +21,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 public class Utility {
     public static final String VIDEO_FORMAT = ".mp4";
