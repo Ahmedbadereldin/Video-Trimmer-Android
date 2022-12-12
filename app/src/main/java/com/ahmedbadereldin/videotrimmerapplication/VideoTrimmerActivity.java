@@ -59,11 +59,12 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
     private TextView txtVideoLength;
 
     private int mDuration = 0;
+    private int mDurationWithoutEdit = 0;
     private int mTimeVideo = 0;
     private int mStartPosition = 0;
     private int mEndPosition = 0;
     // set your max video trim seconds
-    private int mMaxDuration = 60;
+    private int mMaxDuration = 120;
     private Handler mHandler = new Handler();
 
     private ProgressDialog mProgressDialog;
@@ -199,8 +200,24 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                Log.d("onStopTrackingTouch", "onStopTrackingTouch: 123123123   --->  " + (mStartPosition * 1000) + " <-----> " + seekBar.getProgress() + " <-----> " + seekBarVideo.getProgress());
+                Log.d("onStopTrackingTouch", "onStopTrackingTouch: 123123123   --->  " + (mDuration * 1000) + " <-----> " + seekBarVideo.getProgress());
+                Log.d("onStopTrackingTouch", "onStopTrackingTouch: 123123123   --->  " + ((mStartPosition * 1000) - seekBarVideo.getProgress()));
+                Log.d("onStopTrackingTouch", "onStopTrackingTouch: 123123123   --->  " + ((mDuration * 1000) - seekBarVideo.getProgress()));
+                Log.d("onStopTrackingTouch", "onStopTrackingTouch: 123123123   mVideoView--->  " + mVideoView.getDuration());
+                Log.d("onStopTrackingTouch", "onStopTrackingTouch: 123123123   seekBar--->  " + seekBar.getProgress());
+                Log.d("onStopTrackingTouch", "onStopTrackingTouch: 123123123   mStartPosition--->  " + (mStartPosition*1000));
+                Log.d("onStopTrackingTouch", "onStopTrackingTouch: 123123123   mEndPosition--->  " + (mEndPosition*1000));
+
+                // seek bar - 120 sec
+                // start = 130
+                // end = 255
+
+//                if(mDuration)
                 mHandler.removeCallbacks(mUpdateTimeTask);
-                mVideoView.seekTo((mStartPosition * 1000) - seekBarVideo.getProgress());
+//                mVideoView.seekTo((mDuration * 1000) - seekBarVideo.getProgress());
+                mVideoView.seekTo((mStartPosition*1000) + seekBar.getProgress());
+//                mVideoView.start();
             }
         });
     }
@@ -235,7 +252,7 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
                                                            "executeAAAA",
                                                            "execute: " + "Aaaa" + file.length() + " " + dstFile + " " + mStartPosition + " " + mEndPosition + " " + mOnVideoTrimListener
                                                    );
-                                                   Utility.startTrim(VideoTrimmerActivity.this,file, dstFile, mStartPosition * 1000, mEndPosition * 1000, mOnVideoTrimListener);
+                                                   Utility.startTrim(VideoTrimmerActivity.this, file, dstFile, mStartPosition * 1000, mEndPosition * 1000, mOnVideoTrimListener);
                                                } catch (final Throwable e) {
                                                    Objects.requireNonNull(Thread.getDefaultUncaughtExceptionHandler()).uncaughtException(Thread.currentThread(), e);
                                                }
@@ -259,6 +276,9 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
                     if (seekBarVideo.getProgress() == 0) {
                         txtVideoLength.setText("00:00");
                         updateProgressBar();
+                    }else{
+                        txtVideoLength.setText(milliSecondsToTimer(seekBarVideo.getProgress()) + "");
+                        updateProgressBar();
                     }
                 }
             }
@@ -269,6 +289,7 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
         tileView.setVideo(mVideoUri);
     }
 
+    //region todo onVideoPrepared
     private void onVideoPrepared(@NonNull MediaPlayer mp) {
         // Adjust the size of the video
         // so it fits on the screen
@@ -290,9 +311,11 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
         }
         mVideoView.setLayoutParams(lp);*/
 
+        //mVideoView.getDuration() => get in msec we need it in sec
         mDuration = mVideoView.getDuration() / 1000;
         setSeekBarPosition();
     }
+    //endregion
 
     public void updateProgressBar() {
         mHandler.postDelayed(mUpdateTimeTask, 100);
@@ -316,6 +339,7 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
         }
     };
 
+    //region todo setSeekBarPosition
     private void setSeekBarPosition() {
 
         if (mDuration >= mMaxDuration) {
@@ -324,16 +348,20 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
 
             mCustomRangeSeekBarNew.setThumbValue(0, (mStartPosition * 100) / mDuration);
             mCustomRangeSeekBarNew.setThumbValue(1, (mEndPosition * 100) / mDuration);
-
+            //////
+            mDurationWithoutEdit = mDuration;
+//            mDuration = mMaxDuration;
         } else {
             mStartPosition = 0;
             mEndPosition = mDuration;
+            mDurationWithoutEdit = mDuration;
         }
 
 
         mTimeVideo = mDuration;
         mCustomRangeSeekBarNew.initMaxWidth();
-        seekBarVideo.setMax(mMaxDuration * 1000);
+//        seekBarVideo.setMax(mMaxDuration * 1000);
+        seekBarVideo.setMax(mDurationWithoutEdit * 1000);
         mVideoView.seekTo(mStartPosition * 1000);
 
         String mStart = mStartPosition + "";
@@ -352,6 +380,7 @@ public class VideoTrimmerActivity extends AppCompatActivity implements View.OnCl
 
         txtVideoTrimSeconds.setText(String.format(Locale.US, "%02d:%02d - %02d:%02d", startMin, startSec, endMin, endSec));
     }
+    //endregion
 
     /**
      * called when playing video completes
